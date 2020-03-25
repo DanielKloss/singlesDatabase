@@ -1,0 +1,306 @@
+﻿<views:MvxWpfView x:Name="pageRoot"
+             x:Class="SinglesApp.WPF.Views.SinglesCollectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:SinglesApp.WPF.Views"
+             xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
+             xmlns:viewModels="clr-namespace:SinglesApp.Core.ViewModels;assembly=SinglesApp.Core"
+             xmlns:adorners="http://gu.se/Adorners"
+             mc:Ignorable="d"
+             Loaded="pageRoot_Loaded">
+
+    <views:MvxWpfView.Resources>
+        <ObjectDataProvider x:Key="enumfilter" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="viewModels:FilterBooleanOption"></x:Type>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </views:MvxWpfView.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" Margin="5,0,5,0" Padding="5,5,5,5" BorderBrush="LightGray" BorderThickness="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="FILTERS" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding filter.searchTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" adorners:Watermark.Text="Search"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="YEAR:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Text="{Binding filter.yearFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,0" Width="40"/>
+                        <TextBlock Text="to" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Text="{Binding filter.yearTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="SELECTIONS:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Text="{Binding filter.timesSelectedFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,0" Width="30"/>
+                        <TextBlock Text="to" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox Text="{Binding filter.timesSelectedTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Margin="0,0,5,0" Width="30"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="DINKED:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource enumfilter}}" SelectedItem="{Binding filter.dinked, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="PICTURE COVER:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource enumfilter}}" SelectedItem="{Binding filter.pictureCover, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="JUKEBOX CARD PRINTED:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource enumfilter}}" SelectedItem="{Binding filter.jukeboxCardPrinted, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock Text="SINGLE LABEL PRINTED:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource enumfilter}}" SelectedItem="{Binding filter.singleLabelPrinted, Mode=TwoWay}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Line X1="10" X2="10" Y1="5" Y2="235" StrokeThickness="3" Stroke="LightGray" Grid.Column="1" Grid.Row="0"/>
+
+                <StackPanel Grid.Column="2" Grid.Row="0">
+                    <TextBlock Text="ADD SINGLE" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding newSingle.aSideTitle, Mode=TwoWay}" adorners:Watermark.Text="A Side" HorizontalAlignment="Left" Width="100" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding newSingle.bSideTitle, Mode=TwoWay}" adorners:Watermark.Text="B Side" HorizontalContentAlignment="Center" Width="100" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBox Text="{Binding newSingle.artistName, Mode=TwoWay}" adorners:Watermark.Text="Artist" Width="100" Margin="5,0,0,0"/>
+                        <TextBox Text="{Binding newSingle.singleYear, Mode=TwoWay}" adorners:Watermark.Text="Year" Width="100" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <TextBox Text="{Binding newSingle.genreName, Mode=TwoWay}" adorners:Watermark.Text="Genres" Width="205" HorizontalAlignment="Left" Margin="5,5,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                        <StackPanel Width="100">
+                            <TextBlock Text="Picture Cover" Margin="0,0,0,3" HorizontalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding newSingle.pictureCover, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Width="100">
+                            <TextBlock Text="Card Printed" Margin="0,0,0,3" HorizontalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding newSingle.jukeboxCardPrinted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                        <StackPanel Width="100">
+                            <TextBlock Text="Dinked" Margin="0,0,0,3" HorizontalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding newSingle.dinked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Width="100">
+                            <TextBlock Text="Label Printed" Margin="0,0,0,3" HorizontalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding newSingle.singleLabelPrinted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Content="Add New Single" Command="{Binding addNewSingleCommand}" Margin="5,5,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,10" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
+            <Button Content="New Selection" Command="{Binding createNewSelectionCommand}"/>
+            <Button Content="Print Selection" Command="{Binding exportSelectionCommand}"/>
+            <TextBlock Text="VIEW PAST SELECTION:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox ItemsSource="{Binding selections}" SelectedItem="{Binding selection, Mode=TwoWay}" DisplayMemberPath="selectionName" SelectedValuePath="selectionName"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding selectionSingles}" AutoGenerateColumns="False" CanUserSortColumns="True" CanUserAddRows="false" BorderBrush="LightGray" BorderThickness="3" Grid.Row="2" Grid.Column="1" Margin="5,0,5,0">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="A Side" SortMemberPath="aSideTitle" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding aSideTitle}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.removeFromSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Artist" SortMemberPath="artistName" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding artistName}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.removeFromSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="B Side" SortMemberPath="bSideTitle" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding bSideTitle}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.removeFromSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid ItemsSource="{Binding singles}" AutoGenerateColumns="False" CanUserSortColumns="True" CanUserAddRows="false" Grid.Column="0" BorderBrush="LightGray" BorderThickness="3" Grid.RowSpan="3" Margin="5,0,0,0">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="X" MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" Tag="{Binding}">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="auto" SortMemberPath="singleId">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding singleId}">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="A Side" SortMemberPath="aSideTitle" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding aSideTitle}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.addToSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding aSideTitle, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Artist" SortMemberPath="artistName" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding artistName}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.addToSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding artistName, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="B Side" SortMemberPath="bSideTitle" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding bSideTitle}">
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="RightClick" Command="{Binding DataContext.addToSelectionCommand, ElementName=pageRoot}" CommandParameter="{Binding}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding bSideTitle, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Year" SortMemberPath="singleYear" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding singleYear}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding singleYear, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Times Selected" SortMemberPath="numberOfSelections" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding numberOfSelections}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Genres" SortMemberPath="genreName" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding genreName}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding genreName, Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Picture Cover" SortMemberPath="pictureCover" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding pictureCover, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Dinked" SortMemberPath="dinked" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding dinked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Jukebox Card Printed" SortMemberPath="jukeboxCardPrinted" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding jukeboxCardPrinted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
+                <DataGridTemplateColumn Header="Single Label Printed" SortMemberPath="singleLabelPrinted" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding singleLabelPrinted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</views:MvxWpfView>
